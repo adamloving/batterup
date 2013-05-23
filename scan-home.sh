@@ -1,0 +1,1 @@
+while true; do ./scan.rb home.json; sleep 2; done

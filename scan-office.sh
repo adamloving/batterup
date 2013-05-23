@@ -1,0 +1,1 @@
+while true; do ./scan.rb office.json; sleep 2; done
