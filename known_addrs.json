@@ -1,0 +1,58 @@
+{
+  "00:18:71:54:3c:01": {
+    "name": "Downstairs",
+    "device": "printer"
+  },
+  "00:24:7b:7d:0a:f0": {
+    "name": "Downstairs",
+    "device": "router"
+  },
+  "58:b0:35:78:4a:2c": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "58:b0:35:f2:5e:d": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "a:b0:35:78:4a:2c": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "d8:30:62:ff:fe:ec": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "0:1c:42:0:0:8": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "0:1c:42:0:0:9": {
+    "name": "McLovin",
+    "device": "Macbook"
+  },
+  "5c:96:9d:cb:b6:63": {
+    "name": "McLovin",
+    "device": "iPhone"
+  },
+  "00:23:df:81:20:94": {
+    "name": "Kitchen Computer",
+    "device": "Mac mini"
+  },
+  "00:1f:f3:bb:03:26": {
+    "name": "Kitchen Computer",
+    "device": "Mac mini"
+  },
+  "00:23:df:ff:fe:81": {
+    "name": "Kitchen Computer",
+    "device": "Mac mini"
+  },
+  "58:55:ca:ef:78:f5": {
+    "name": "Alita",
+    "device": "Macbook Air"
+  },
+  "98:b8:e3:98:ff:82": {
+    "name": "McLovin",
+    "device": "iPad"
+  }
+}
