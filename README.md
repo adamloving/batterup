@@ -1,6 +1,9 @@
 # What is Batter Up?
 
-This is a ruby script to scan a wifi network for new devices, and play a theme song when somebody re-appears after 
+Wouldn't it be great if your theme song played when you walked in the office? 
+Just like at a baseball game, when a player walks up to bat.
+
+This is a ruby script to scan a local network, and play a theme song when somebody (a device) re-appears after 
 being gone. You have to manually map mac addresses to people (people may have multiple devices). You can do this
 by running the script, and correlating new addresses with people walking in to work.
 
