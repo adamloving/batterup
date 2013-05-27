@@ -10,11 +10,32 @@ range = (1..(ARGV[2]||50).to_i)
 
 live_ips = []
 played_song_addrs = []
+use_mpg123 = system "which mpg123" 
+use_afplay = system "which afplay" 
+use_say = system "which say" 
+use_espeak = system "which espeak" 
+use_festival = system "which festival" 
+
+def say(string)
+  if use_say
+   `say "#{string}"`
+  elsif use_espeak 
+   `espeak -ven+f3 -k5 -s150 "#{string}"`
+  elsif use_festival
+   ` echo "#{string}" |festival --tts`
+  end
+end
 
 def play_song_for(user_name, played_song_addrs)
-  if user_name && !played_song_addrs.include?(user_name)
+  file = File.join("music",user_name+".mp3")
+  if user_name && !played_song_addrs.include?(user_name) && File.exsist?(file)
     played_song_addrs << user_name
-    system "afplay music/#{user_name.downcase}.mp3&"  
+    # do we really want to background the playing of the file?
+    if use_afplay
+    	system "afplay #{file} &"  
+    elsif use_mpg123
+    	system "mpg123 -a hw:0,0 #{file} &"
+    end
   end
 end
 
@@ -73,13 +94,13 @@ for m in current_mac_addrs
 
     if interval_missing > interval_before_welcome
       play_song_for(user_name, played_song_addrs)
-      `say "#{phrase}"`
+      say "#{phrase}"
     end
   else
     phrase = "#{user_name} (#{user_device}) seen for the first time ever at #{Time.now.strftime("%m-%d %H:%M")}"
     puts phrase
     play_song_for(user_name, played_song_addrs)
-    `say "#{phrase}"`
+    say "#{phrase}"
     mac_addrs[m] = { first_seen: timestamp }
   end
   mac_addrs[m]['last_seen'] = timestamp
