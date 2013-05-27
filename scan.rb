@@ -28,7 +28,7 @@ end
 
 def play_song_for(user_name, played_song_addrs)
   file = File.join("music",user_name+".mp3")
-  if user_name && !played_song_addrs.include?(user_name) && File.exsist?(file)
+  if user_name && !played_song_addrs.include?(user_name) && File.exist?(file)
     played_song_addrs << user_name
     # do we really want to background the playing of the file?
     if use_afplay
