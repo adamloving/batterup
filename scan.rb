@@ -2,13 +2,23 @@
 require 'json'
 
 mac_addr_regexp = /[0-9A-F]{1,2}:[0-9A-F]{1,2}:[0-9A-F]{1,2}:[0-9A-F]{1,2}:[0-9A-F]{1,2}:[0-9A-F]{1,2}/i
+ignore_addrs = ['ff:ff:ff:ff:ff:ff']
 interval_before_welcome = 3600 # one hour
-base_ip = '192.168.0.'
-range = (1..22)
-file_name = ARGV.first || 'data.json'
+file_name = ARGV[0] || 'data.json'
+base_ip = ARGV[1] || '10.1.10.' # '192.168.0.'
+range = (1..(ARGV[2]||50).to_i)
 
 live_ips = []
+played_song_addrs = []
 
+def play_song_for(user_name, played_song_addrs)
+  if user_name && !played_song_addrs.include?(user_name)
+    played_song_addrs << user_name
+    system "afplay music/#{user_name.downcase}.mp3&"  
+  end
+end
+
+# load list of mac addrs from hand-written list which associates them with a person's name
 begin
   known_addrs = JSON.parse(open('known_addrs.json').read)
   puts "loaded #{known_addrs.keys.size} known mac addresses"
@@ -17,6 +27,7 @@ rescue
   known_addrs = {}
 end
 
+# load scan history file
 begin
   mac_addrs = JSON.parse(open(file_name).read)
   puts "loaded history info on #{mac_addrs.keys.size} mac addresses"
@@ -25,7 +36,7 @@ rescue
   mac_addrs = {}
 end
 
-# scan IPs to warm up ARP cache
+# ping IPs to warm up ARP cache
 for n in range
   # count 1, timeout 1s
   ip = "#{base_ip}#{n}"
@@ -49,6 +60,7 @@ current_mac_addrs = results.scan(mac_addr_regexp)
 timestamp = Time.now.to_i
 
 for m in current_mac_addrs
+  next if ignore_addrs.include?(m)
   print "#{m} "
   known_user = known_addrs[m]
   user_name = known_user ? known_user['name'] : 'Somebody'
@@ -60,13 +72,15 @@ for m in current_mac_addrs
     puts phrase
 
     if interval_missing > interval_before_welcome
+      play_song_for(user_name, played_song_addrs)
       `say "#{phrase}"`
     end
   else
-    phrase = "#{user_name} (#{user_device}) seen for the first time ever!"
+    phrase = "#{user_name} (#{user_device}) seen for the first time ever at #{Time.now.strftime("%m-%d %H:%M")}"
     puts phrase
+    play_song_for(user_name, played_song_addrs)
     `say "#{phrase}"`
-    mac_addrs[m] = { }
+    mac_addrs[m] = { first_seen: timestamp }
   end
   mac_addrs[m]['last_seen'] = timestamp
 end
