@@ -20,7 +20,6 @@ raise 'No mp3 program found' unless $use_mpg123 || $use_afplay || $use_omxplayer
 raise 'No speak program found' unless $use_say || $use_espeak || $use_festival
 puts $use_say
 def say(string)
-  return
   if $use_say
    `say "#{string}"`
   elsif $use_espeak 
