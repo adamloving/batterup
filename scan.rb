@@ -63,6 +63,10 @@ rescue
 end
 
 # ping IPs to warm up ARP cache
+# may be able to replace for-loop with pinging the 'broadcast' address first
+# ifconfig | grep broadcast
+# ping -c 3 10.0.1.255
+
 for n in range
   # count 1, timeout 1s
   ip = "#{base_ip}#{n}"
@@ -91,6 +95,8 @@ for m in current_mac_addrs
   known_user = known_addrs[m]
   user_name = known_user ? known_user['name'] : 'Somebody'
   user_device = known_user ? known_user['device'] : 'Unknown device'
+
+  # If no device, find it in netstat results (match mac, then take first column)
 
   if mac_addrs[m]
     interval_missing = timestamp - mac_addrs[m]['last_seen']

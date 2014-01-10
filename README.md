@@ -21,6 +21,11 @@ by running the script, and correlating new addresses with people walking in to w
 See scan-home.sh and scan-office.sh for examples
 
 ## Tips
+
+Run this to get a mapping between IP addr, mac addr, and machine name.
+
+    netstat -r | grep UH
+
 Run this on your laptop to get all your mac addresses
 
     ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'

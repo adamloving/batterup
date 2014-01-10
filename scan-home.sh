@@ -1,1 +1,1 @@
-while true; do ./scan.rb home.json '192.168.0.' 20; sleep 2; done
+while true; do ./scan.rb home.json '10.0.1.' 0; sleep 2; done
