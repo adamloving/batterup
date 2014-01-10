@@ -24,3 +24,5 @@ See scan-home.sh and scan-office.sh for examples
 Run this on your laptop to get all your mac addresses
 
     ifconfig | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'
+
+(make sure to take padded 0s out when pasting into known addrs)

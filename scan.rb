@@ -35,9 +35,9 @@ def play_song_for(user_name, played_song_addrs)
     played_song_addrs << user_name
     # do we really want to background the playing of the file?
     if $use_afplay
-    	system "afplay #{file} &"  
+    	`afplay #{file} &`  
     elsif $use_omxplayer
-        system "omxplayer #{file}"
+      system "omxplayer #{file}"
     elsif $use_mpg123
     	system "mpg123 -a hw:0,0 #{file} "
     end
@@ -98,14 +98,14 @@ for m in current_mac_addrs
     puts phrase
 
     if interval_missing > interval_before_welcome
-      play_song_for(user_name, played_song_addrs)
-      say "#{phrase}"
+      play_song_for(user_name, played_song_addrs) 
+      say "#{phrase}" unless user_name == 'Somebody'
     end
   else
     phrase = "#{user_name} (#{user_device}) seen for the first time ever at #{Time.now.strftime("%m-%d %H:%M")}"
     puts phrase
     play_song_for(user_name, played_song_addrs)
-    say "#{phrase}"
+    say "#{phrase}" unless user_name == 'Somebody'
     mac_addrs[m] = { first_seen: timestamp }
   end
   mac_addrs[m]['last_seen'] = timestamp
